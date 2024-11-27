@@ -37,7 +37,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@$EC2_IP << 'EOF'
             echo "Subiendo y ejecutando el archivo ec2_user_data.sh"
             
             # Subir el archivo ec2_user_data.sh desde GitHub Actions a la instancia EC2
