@@ -36,17 +36,18 @@ jobs:
           # Conexión SSH a la instancia EC2 y ejecución del archivo ec2_user_data.sh
           echo "$SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
+
           ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP << 'EOF'
             echo "Subiendo y ejecutando el archivo ec2_user_data.sh"
             
             # Subir el archivo ec2_user_data.sh desde GitHub Actions a la instancia EC2
-            echo "$USER_DATA" > /home/ec2-user/ec2_user_data.sh
+            echo "$USER_DATA" > /home/ubuntu/ec2_user_data.sh
             
             # Darle permisos de ejecución al archivo
-            chmod +x /home/ec2-user/ec2_user_data.sh
+            chmod +x /home/ubuntu/ec2_user_data.sh
             
             # Ejecutar el archivo ec2_user_data.sh
-            sudo /home/ec2-user/ec2_user_data.sh
+            sudo /home/ubuntu/ec2_user_data.sh
             
           EOF
 
