@@ -65,7 +65,7 @@ if [ $? -eq 0 ]; then
   if [ $? -eq 0 ]; then
     echo "Cluster creado exitosamente con eksctl."
   else
-    echo "Error: La creación del cluster falló al ejecutar eksctl."
+    echo "Error: La creación del cluster falló al ejecutar eksctl"
     exit 1
   fi
 else
