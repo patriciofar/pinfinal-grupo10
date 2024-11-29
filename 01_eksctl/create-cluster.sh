@@ -17,7 +17,7 @@ then
   --ssh-public-key pin-grupo10\
   --managed\
   --full-ecr-access\
-  --zones us-east-2a,us-east-2b,us-east-2c
+  --zones us-east-1a,us-east-1b,us-east-1c
 
   if [ $? -eq 0 ]
   then
