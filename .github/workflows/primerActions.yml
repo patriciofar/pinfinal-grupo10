@@ -64,13 +64,16 @@ jobs:
         run: |
           chmod +x 01_eksctl/create-cluster.sh
           ./01_eksctl/create-cluster.sh
+      # Paso 7: Verificar si el clúster fue creado correctamente
+      - name: List EKS clusters
+        run: aws eks list-clusters --region us-east-1
 
-      # Paso 7: Verificar el estado del cluster de EKS
+      # Paso 8: Verificar el estado del cluster de EKS
       - name: Verify EKS Cluster Status
         run: |
           aws eks describe-cluster --name eks-mundos-e --query "cluster.status"
 
-      # Paso 8: Desplegar un pod de nginx en el cluster de EKS
+      # Paso 9: Desplegar un pod de nginx en el cluster de EKS
       - name: Deploy nginx pod in EKS
         run: |
           # Configurar kubectl para usar el cluster de EKS
@@ -79,12 +82,12 @@ jobs:
           # Desplegar un pod de nginx en el cluster
           kubectl run nginx --image=nginx --restart=Never
           
-      # Paso 9: Verificar que el pod nginx esté corriendo
+      # Paso 10 Verificar que el pod nginx esté corriendo
       - name: Check nginx pod status
         run: |
           kubectl get pods -l run=nginx
       
-      # Paso 10: Instalar Prometheus usando Helm
+      # Paso 11: Instalar Prometheus usando Helm
       - name: Install Prometheus with Helm
         run: |
           # Añadir el repositorio de Prometheus
@@ -94,7 +97,7 @@ jobs:
           # Instalar Prometheus en el namespace prometheus
           helm install prometheus prometheus-community/prometheus --namespace prometheus --set alertmanager.persistentVolume.storageClass="gp2" --set server.persistentVolume.storageClass="gp2"
 
-      # Paso 11: Instalar Grafana usando Helm
+      # Paso 12: Instalar Grafana usando Helm
       - name: Install Grafana with Helm
         run: |
           # Añadir el repositorio de Grafana
@@ -109,7 +112,7 @@ jobs:
             --values ./grafana.yaml \
             --set service.type=LoadBalancer
 
-      # Paso 12: Obtener la URL de Grafana
+      # Paso 13: Obtener la URL de Grafana
       - name: Get Grafana URL
         run: |
           kubectl get svc -n grafana
