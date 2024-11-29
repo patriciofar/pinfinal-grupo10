@@ -31,8 +31,14 @@ if [ $? -eq 0 ]; then
   if [ ! -z "$CLUSTER_EXISTS" ]; then
     echo "El clúster '$CLUSTER_NAME' ya existe. Eliminándolo primero..."
     
-    # Eliminando el clúster existente
-    eksctl delete cluster --region us-east-1 --name "$CLUSTER_NAME"
+    # Eliminando la pila de CloudFormation asociada al clúster si existe
+    aws cloudformation delete-stack --stack-name "eksctl-eks-mundos-e-cluster" --region us-east-1
+
+    # Esperar hasta que la pila sea eliminada
+    echo "Esperando a que la pila de CloudFormation se elimine..."
+    aws cloudformation wait stack-delete-complete --stack-name "eksctl-eks-mundos-e-cluster" --region us-east-1
+
+    # Verificando que la pila se haya eliminado correctamente
     if [ $? -eq 0 ]; then
       echo "El clúster '$CLUSTER_NAME' ha sido eliminado correctamente."
     else
