@@ -25,9 +25,10 @@ if [ $? -eq 0 ]; then
 
   # Verificando si el clúster existe
   CLUSTER_NAME="eks-mundos-e"
-  CLUSTER_EXISTS=$(eksctl get clusters --region us-east-1 --name "$CLUSTER_NAME" --output json | jq length)
+  CLUSTER_EXISTS=$(eksctl get clusters --region us-east-1 --name "$CLUSTER_NAME" --output json)
 
-  if [ "$CLUSTER_EXISTS" -gt 0 ]; then
+  # Si el clúster existe, eliminamos el clúster antes de crear uno nuevo
+  if [ ! -z "$CLUSTER_EXISTS" ]; then
     echo "El clúster '$CLUSTER_NAME' ya existe. Eliminándolo primero..."
     
     # Eliminando el clúster existente
