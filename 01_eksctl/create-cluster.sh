@@ -23,9 +23,28 @@ if [ $? -eq 0 ]; then
     echo "eksctl ya está instalado."
   fi
 
+  # Verificando si el clúster existe
+  CLUSTER_NAME="eks-mundos-e"
+  CLUSTER_EXISTS=$(eksctl get clusters --region us-east-1 --name "$CLUSTER_NAME" --output json | jq length)
+
+  if [ "$CLUSTER_EXISTS" -gt 0 ]; then
+    echo "El clúster '$CLUSTER_NAME' ya existe. Eliminándolo primero..."
+    
+    # Eliminando el clúster existente
+    eksctl delete cluster --region us-east-1 --name "$CLUSTER_NAME"
+    if [ $? -eq 0 ]; then
+      echo "El clúster '$CLUSTER_NAME' ha sido eliminado correctamente."
+    else
+      echo "Error al eliminar el clúster '$CLUSTER_NAME'."
+      exit 1
+    fi
+  else
+    echo "No se encontró el clúster '$CLUSTER_NAME'. Procediendo con la creación."
+  fi
+
   # Creación del cluster en EKS
   eksctl create cluster \
-    --name eks-mundos-e \
+    --name "$CLUSTER_NAME" \
     --region us-east-1 \
     --nodes 3 \
     --node-type t3.small \
