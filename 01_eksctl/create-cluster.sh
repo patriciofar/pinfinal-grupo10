@@ -6,7 +6,22 @@ if [ $? -eq 0 ]; then
   echo "Credenciales AWS configuradas correctamente. Procediendo con la creación del cluster."
 
   # Verificando si eksctl está instalado
-  command -v eksctl >/dev/null 2>&1 || { echo >&2 "eksctl no está instalado. Instalando..."; exit 1; }
+  if ! command -v eksctl &> /dev/null; then
+    echo "eksctl no está instalado. Instalando..."
+
+    # Descargando e instalando eksctl
+    curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/v0.114.0/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
+    if [ $? -eq 0 ]; then
+      sudo mv /tmp/eksctl /usr/local/bin/eksctl
+      sudo chmod +x /usr/local/bin/eksctl
+      echo "eksctl instalado correctamente."
+    else
+      echo "Error al instalar eksctl."
+      exit 1
+    fi
+  else
+    echo "eksctl ya está instalado."
+  fi
 
   # Creación del cluster en EKS
   eksctl create cluster \
@@ -25,6 +40,7 @@ if [ $? -eq 0 ]; then
     echo "Cluster creado exitosamente con eksctl."
   else
     echo "Error: La creación del cluster falló al ejecutar eksctl."
+    exit 1
   fi
 else
   echo "No se encuentran credenciales de AWS configuradas. Por favor, ejecuta 'aws configure' para configurar las credenciales adecuadas."
