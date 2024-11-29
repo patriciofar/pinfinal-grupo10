@@ -70,7 +70,7 @@ if [ $? -eq 0 ]; then
     exit 1
   fi
 else
-  echo "No se encuentran credenciales de AWS configuradas. Por favor, ejecuta 'aws configure' para configurar las credenciales adecuadas."
+  echo "No se encuentran credenciales de AWS configuradas. Por favor, ejecuta 'aws configure' para configurar las credenciales adecuadas"
   echo "El setup del cluster ha fallado."
   exit 1
 fi
