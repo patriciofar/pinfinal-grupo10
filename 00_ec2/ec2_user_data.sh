@@ -52,10 +52,15 @@ helm version
 
 # Instalación de Terraform en Ubuntu
 echo "Installing Terraform"
+
+# Añadir la clave de HashiCorp y el repositorio
 sudo apt-get update
 sudo apt-get install -y gnupg software-properties-common
 sudo wget -qO- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor > /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt-get update
+
+# Instalar Terraform
 sudo apt-get install -y terraform
 
 echo "Instalación completada"

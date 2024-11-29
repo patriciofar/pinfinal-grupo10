@@ -42,7 +42,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@$EC2_IP << 'EOF'
             chmod +x /home/ubuntu/ec2_user_data.sh
             sudo /home/ubuntu/ec2_user_data.sh
-          EOF
             
           EOF
 
