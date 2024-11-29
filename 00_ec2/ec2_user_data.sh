@@ -16,7 +16,15 @@ kubectl version --client
 
 echo "Installing eksctl"
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+if [ $? -ne 0 ]; then
+  echo "Failed to download eksctl"
+  exit 1
+fi
 sudo mv /tmp/eksctl /usr/local/bin
+if [ $? -ne 0 ]; then
+  echo "Failed to move eksctl to /usr/local/bin"
+  exit 1
+fi
 export PATH=$PATH:/usr/local/bin
 echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc
 eksctl version
