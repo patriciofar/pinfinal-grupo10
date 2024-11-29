@@ -60,8 +60,7 @@ if [ $? -eq 0 ]; then
     --ssh-public-key pin-grupo10 \
     --managed \
     --full-ecr-access \
-    --zones us-east-1a,us-east-1b,us-east-1c \
-    --version 1.23
+    --zones us-east-1a,us-east-1b,us-east-1c
 
   if [ $? -eq 0 ]; then
     echo "Cluster creado exitosamente con eksctl."
