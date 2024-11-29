@@ -29,23 +29,33 @@ export PATH=$PATH:/usr/local/bin
 echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc
 eksctl version
 
-echo "Installing docker"
-sudo yum install -y docker
-sudo usermod -a -G docker ec2-user
-newgrp docker
-wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) 
-sudo mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
-sudo chmod -v +x /usr/local/bin/docker-compose
+# Instalación de Docker en Ubuntu
+echo "Installing Docker"
+sudo apt-get update
+sudo apt-get install -y docker.io
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
+
+# Añadir el usuario al grupo docker para que pueda usar Docker sin sudo
+sudo usermod -aG docker ubuntu
+newgrp docker
+
+# Descargar e instalar Docker Compose
+echo "Installing Docker Compose"
+wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)
+sudo mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
+sudo chmod -v +x /usr/local/bin/docker-compose
 
 echo "Installing Helm"
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 helm version
 
-echo "Installing terraform "
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-sudo yum install -y terraform
+# Instalación de Terraform en Ubuntu
+echo "Installing Terraform"
+sudo apt-get update
+sudo apt-get install -y gnupg software-properties-common
+sudo wget -qO- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor > /usr/share/keyrings/hashicorp-archive-keyring.gpg
+sudo apt-get update
+sudo apt-get install -y terraform
 
 echo "Instalación completada"
