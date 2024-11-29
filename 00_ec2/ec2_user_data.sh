@@ -1,6 +1,9 @@
 #!/bin/bash
+# Instalar unzip si no está instalado
+echo "Installing unzip"
+sudo apt-get update
+sudo apt-get install -y unzip
 
-# Instalación de AWS CLI en Ubuntu
 echo "Installing AWS CLI"
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
