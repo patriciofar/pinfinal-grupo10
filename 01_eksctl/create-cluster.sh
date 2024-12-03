@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Variables
-CLUSTER_NAME=mundoes-cluster-G6
-AWS_REGION=us-east-2
+CLUSTER_NAME=eks-mundos-e
+AWS_REGION=us-east-1
 
 # Set AWS credentials 
 aws sts get-caller-identity >> /dev/null
@@ -22,7 +22,7 @@ then
     --managed \
     --full-ecr-access \
     --zones us-east-1a,us-east-1b,us-east-1c \
-    --version 1.22
+    --version 0.197.0
 
   if [ $? -eq 0 ]; then
     echo "Cluster creado exitosamente con eksctl."
