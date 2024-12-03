@@ -53,7 +53,14 @@ jobs:
           echo "La instancia EC2 se está ejecutando con ID: $INSTANCE_ID"
           aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].State.Name' --output text
       
-      # Paso 6: Crear el cluster de EKS utilizando eksctl
+      # Paso 6: Instalar eksctl
+      - name: Install eksctl
+        run: |
+          curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+          sudo mv /tmp/eksctl /usr/local/bin
+          eksctl version
+
+      # Paso 6.1: Crear el cluster de EKS utilizando eksctl
       - name: Create EKS Cluster with eksctl
         run: |
           chmod +x 01_eksctl/create-cluster.sh
