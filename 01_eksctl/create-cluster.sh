@@ -22,7 +22,7 @@ then
     --managed \
     --full-ecr-access \
     --zones us-east-1a,us-east-1b,us-east-1c \
-  --version 1.22
+    --version 1.22
 
   if [ $? -eq 0 ]; then
     echo "Cluster creado exitosamente con eksctl."
