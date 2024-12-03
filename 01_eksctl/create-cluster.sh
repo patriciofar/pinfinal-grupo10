@@ -4,6 +4,16 @@
 CLUSTER_NAME=eks-mundos-e
 AWS_REGION=us-east-1
 
+# Asegurarse de que /usr/local/bin está en el PATH
+export PATH=$PATH:/usr/local/bin
+
+# Verificar si eksctl está disponible
+if ! command -v eksctl &> /dev/null
+then
+    echo "Error: eksctl no está instalado o no está en el PATH"
+    exit 1
+fi
+
 # Set AWS credentials 
 aws sts get-caller-identity >> /dev/null
 if [ $? -eq 0 ]
@@ -21,8 +31,7 @@ then
     --ssh-public-key pin-grupo10 \
     --managed \
     --full-ecr-access \
-    --zones us-east-1a,us-east-1b,us-east-1c \
-    --version 0.197.0
+    --zones us-east-1a,us-east-1b,us-east-1c
 
   if [ $? -eq 0 ]; then
     echo "Cluster creado exitosamente con eksctl."
