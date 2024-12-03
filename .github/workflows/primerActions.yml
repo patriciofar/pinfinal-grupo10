@@ -91,6 +91,9 @@ jobs:
       # Paso 11: Instalar Prometheus usando Helm
       - name: Install Prometheus with Helm
         run: |
+          # Crear el namespace prometheus si no existe
+          kubectl create namespace prometheus || echo "Namespace prometheus ya existe"
+
           # Añadir el repositorio de Prometheus
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo update
