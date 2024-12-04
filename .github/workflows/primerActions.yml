@@ -104,6 +104,9 @@ jobs:
       # Paso 12: Instalar Grafana usando Helm
       - name: Install Grafana with Helm
         run: |
+          # Create Grafana namespace
+          kubectl create namespace grafana || echo "Namespace grafana ya existe"
+
           # Añadir el repositorio de Grafana
           helm repo add grafana https://grafana.github.io/helm-charts
           helm repo update
