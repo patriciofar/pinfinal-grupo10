@@ -113,7 +113,7 @@ jobs:
             --set persistence.storageClassName="gp2" \
             --set persistence.enabled=true \
             --set adminPassword='EKS!sAWSome' \
-            --values ./grafana.yaml \
+            --values ./04_monitoreo/grafana.yaml \
             --set service.type=LoadBalancer
 
       # Paso 13: Obtener la URL de Grafana
